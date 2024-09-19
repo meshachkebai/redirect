@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+</head>
+<body>
+    <p>Redirecting to app...</p>
+    <script>
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.hash.slice(1));
+            return urlParams.get(name);
+        }
+
+        const access_token = getQueryParam('access_token');
+        const refresh_token = getQueryParam('refresh_token');
+
+        if (access_token && refresh_token) {
+            window.location.href = `ourapp_ces://confirm#access_token=${access_token}&refresh_token=${refresh_token}`;
+        } else {
+            document.body.innerHTML = 'Error: Missing tokens';
+        }
+    </script>
+</body>
+</html>
