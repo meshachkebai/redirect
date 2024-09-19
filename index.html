@@ -1,24 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title style="color: #FFFFFF; background-color: #15202B;">Redirecting...</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to aurapp...</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #15202B;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
-<body style="background-color: #15202B;">
-    <p style="color: #FFFFFF;">Redirecting to app...</p>
+<body>
+    <div class="container">
+        <h1>Redirecting to aurapp</h1>
+        <div class="loader"></div>
+        <p>Please wait while we redirect you to the app...</p>
+    </div>
+
     <script>
         function getQueryParam(name) {
             const urlParams = new URLSearchParams(window.location.hash.slice(1));
             return urlParams.get(name);
         }
 
-        const access_token = getQueryParam('access_token');
-        const refresh_token = getQueryParam('refresh_token');
+        function redirect() {
+            const access_token = getQueryParam('access_token');
+            const refresh_token = getQueryParam('refresh_token');
 
-        if (access_token && refresh_token) {
-            window.location.href = `ourapp_ces://confirm#access_token=${access_token}&refresh_token=${refresh_token}`;
-        } else {
-            document.body.innerHTML = 'Error: Missing tokens';
+            if (access_token && refresh_token) {
+                window.location.href = `ourapp_ces://confirm#access_token=${access_token}&refresh_token=${refresh_token}`;
+            } else {
+                document.body.innerHTML = '<div class="container"><h1>Error</h1><p>Missing authentication tokens. Please try again.</p></div>';
+            }
         }
+
+        // Delay redirect slightly to show loading animation
+        setTimeout(redirect, 1500);
     </script>
 </body>
 </html>
